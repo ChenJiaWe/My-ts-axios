@@ -22,6 +22,7 @@ export class CancelToken {
             resolvePromise(this.reason);
         })
     }
+    //判断是否调用了CancelToken
     throwIfRequested(): void {
         if (this.reason) {
             throw this.reason;

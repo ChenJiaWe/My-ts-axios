@@ -12,7 +12,7 @@
   "author": "Chen <1770144725@qq.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/15928294509/My-ts-axios"
   },
   "license": "MIT",
   "engines": {
@@ -53,7 +53,7 @@
     "transform": {
       ".(ts|tsx)": "ts-jest"
     },
-    "testEnvironment": "node",
+    "testEnvironment": "jsdom",
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "moduleFileExtensions": [
       "ts",

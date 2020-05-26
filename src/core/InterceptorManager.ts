@@ -6,7 +6,7 @@ export interface Interceptor<T> {
     rejected?: RejectedFn
 }
 
-
+//拦截器管理
 export class InterceptorManager<T> {
     private interceptors: Array<Interceptor<T> | null>
 

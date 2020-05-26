@@ -4,7 +4,9 @@ import { InterceptorManager } from "./InterceptorManager";
 import { mergeConfig } from "./mergeConfig";
 
 interface Interceptors {
+    //请求拦截器
     request: InterceptorManager<AxiosRequestConfig>
+    //响应拦截器
     response: InterceptorManager<AxiosResponse>
 }
 
@@ -16,16 +18,20 @@ interface PromiseChain<T> {
 
 
 export default class Axios {
+    //默认配置
     defaults: AxiosRequestConfig
     interceptors: Interceptors
     constructor(initConfig: AxiosRequestConfig) {
         this.interceptors = {
+            //创建请求拦截器实例
             request: new InterceptorManager(),
+            //创建响应拦截器实例
             response: new InterceptorManager()
         }
         this.defaults = initConfig;
     }
     request(url: any, config?: any): AxiosPromise {
+        //判断第一个参数传入的是配置还是url
         if (typeof url === "string") {
             if (!config) {
                 config = {}
@@ -34,20 +40,24 @@ export default class Axios {
         } else {
             config = url
         }
+        //将默认配置与用户设置的配置合并
         config = mergeConfig(this.defaults, config);
         config.method = config.method.toLowerCase();
+        //存放多个拦截器的数组
         let chain: PromiseChain<any>[] = [{
             resolve: dispatchRequest,
             rejected: undefined
         }]
+        //请求拦截器先放入后调用
         this.interceptors.request.forEach(interceptor => {
             chain.unshift(interceptor);
         })
+        //响应拦截器先放入先调用
         this.interceptors.response.forEach(interceptor => {
             chain.push(interceptor);
         })
         let promise = Promise.resolve(config);
-
+        //依次将拦截器中的调用的函数传入到下一个拦截器，直到传入到最后一个中
         while (chain.length) {
             const { resolve, rejected } = chain.shift()!;
             promise = promise.then(resolve, rejected)

@@ -7,6 +7,7 @@ import { transform } from "../helpers/transform";
 
 export function dispatchRequest(config: AxiosRequestConfig): AxiosPromise {
     processConfig(config);
+    //判断是否调用了CancelToken
     thrownIfAxiosRequsted(config);
     return xhr(config).then(res => {
         return transformResponseData(res);
@@ -31,7 +32,6 @@ export function transformURL(config: AxiosRequestConfig): string {
     }
     return buildURL(url!, params);
 }
-
 function transformResponseData(res: AxiosResponse): AxiosResponse {
     res.data = transform(res.data, res.headers, res.config.transformResponse);
     return res;
