@@ -77,7 +77,7 @@ export interface AxiosInstance extends Axios {
 }
 
 export interface AxiosClassStaic {
-    new(config?: AxiosRequestConfig): Axios
+    new(config: AxiosRequestConfig): Axios
 }
 
 export interface AxiosStaic extends AxiosInstance {

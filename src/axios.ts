@@ -26,6 +26,7 @@ axios.all = function all(params) {
     return Promise.all(params)
 }
 
+axios.Axios = Axios
 
 axios.spread = function (callback) {
     return function (arr) {
